@@ -11,29 +11,29 @@ class NotebookController extends Controller
         return Notebook::all();
     }
  
-    public function show($id)
+    public function show(Notebook $notebook)
     {
-        return Notebook::find($id);
+        return $notebook;
     }
 
     public function store(Request $request)
     {
-        return Notebook::create($request->all());
+        $notebook = Notebook::create($request->all());
+
+        return response()->json($notebook, 201);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Notebook $notebook)
     {
-        $notebook = Notebook::findOrFail($id);
         $notebook->update($request->all());
 
-        return $notebook;
+        return response()->json($notebook, 200);
     }
 
-    public function delete(Request $request, $id)
+    public function delete(Notebook, $notebook)
     {
-        $notebook = Notebook::findOrFail($id);
         $notebook->delete();
 
-        return 204;
+        return response()->json(null, 204);
     }
 }
