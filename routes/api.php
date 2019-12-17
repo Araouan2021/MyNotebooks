@@ -13,11 +13,19 @@ use App\Notebook;
 |
 */
 
+Route::middleware('auth:api')
+    ->get('/user', function (Request $request) {
+        return $request->user();
+});
+
 Route::post('login', 'Auth\LoginController@login');
-Route::post('register', 'Auth\RegisterController@register');
 Route::post('logout', 'Auth\LoginController@logout');
+Route::post('register', 'Auth\RegisterController@register');
+
+// Route::group(['middleware' => 'auth:api'], function() {
 Route::get('notebooks', 'NotebookController@index');
 Route::get('notebooks/{notebook}', 'NotebookController@show');
 Route::post('notebooks', 'NotebookController@store');
 Route::put('notebooks/{notebook}', 'NotebookController@update');
 Route::delete('notebooks/{notebook}', 'NotebookController@delete');
+// });
