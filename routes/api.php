@@ -12,7 +12,10 @@ use App\Notebook;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::post('login', 'Auth\LoginController@login');
 Route::post('register', 'Auth\RegisterController@register');
+Route::post('logout', 'Auth\LoginController@logout');
 Route::get('notebooks', 'NotebookController@index');
 Route::get('notebooks/{notebook}', 'NotebookController@show');
 Route::post('notebooks', 'NotebookController@store');
