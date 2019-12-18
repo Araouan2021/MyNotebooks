@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Notebook;
 use Illuminate\Http\Request;
 
 class NotebookController extends Controller
@@ -20,14 +21,14 @@ class NotebookController extends Controller
     {
         $notebook = Notebook::create($request->all());
 
-        return response()->json($notebook, 201);
+        return response()->json($notebook);
     }
 
     public function update(Request $request, Notebook $notebook)
     {
         $notebook->update($request->all());
 
-        return response()->json($notebook, 200);
+        return response()->json($notebook);
     }
 
     public function delete(Notebook, $notebook)
