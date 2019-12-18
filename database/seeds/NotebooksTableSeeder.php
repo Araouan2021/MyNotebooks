@@ -20,8 +20,8 @@ class NotebooksTableSeeder extends Seeder
         for ($i = 0; $i < 50; $i++) {
             Notebook::create([
                 'heading' => $faker->sentence,
-                'description' => $faker->paragraph
-                'date' => $faker->sentence,          
+                'description' => $faker->paragraph,
+                'date' => $faker->sentence       
             ]);
         }
     }
