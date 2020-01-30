@@ -3,20 +3,22 @@
 namespace Tests\Feature\Http\Controllers\Auth;
 
 use App\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class NotebookControllerTest.php extends TestCase
+
+
+class NotebookControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function index()
+    /** @test */
+    public function store_notebooks()
     {
         $response = $this->get(route('notebooks'));
 
-        $response->assertStatus(200);
+        $response->assertStatus(201);
         $response->assertViewIs('auth.notebooks');
-    }
-    
+    } 
 }
