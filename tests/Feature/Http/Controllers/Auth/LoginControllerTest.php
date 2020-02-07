@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers\Auth;
 
-use App\User;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -11,36 +11,35 @@ class LoginControllerTest extends TestCase
 {   
     use RefreshDatabase;
 
+    use AuthenticatesUsers;
+
+    /**
+     * Where to redirect users after login.
+     *
+     * @var string
+     */
+    protected $redirectTo = '/home';
+
 
     /** @test */
-    public function login_returns_view()
+    public function login(Request $request)
     {
-        $response = $this->get(route('login'));
+    $this->validateLogin($request);
+    if ($this->attemptLogin($request)) {
+        $user = $this->guard()->user();
+        $user->generateToken();
 
-        $response->assertStatus(200);
-        $response->assertViewIs('auth.login');
-    }
-
-    /** @test */
-    public function login_displays_validation_errors()
-    {   $response = $this->post('/login', []);
-
-        $response->assertStatus(302);
-        $response->assertSessionHasErrors('email');
-    }
-
-    /** @test */
-    public function login_authenticates_and_redirects_user()
-    {
-        $user = factory(User::class)->create();
-
-        $response = $this->post(route('login'), [
-            'email' => $user->email,
-            'password' => 'password'
+        return response()->json([
+            'data' => $user->toArray(),
         ]);
+    }
 
-        $response->assertRedirect(route('home'));
-        $this->assertAuthenticatedAs($user);
+    return $this->sendFailedLoginResponse($request);
+    $response = $this->post('/api/login');
+    $response->assertJson([
+        'data' => $user->toArray(),
+        ]);
     }
 }
+    ?>
     
