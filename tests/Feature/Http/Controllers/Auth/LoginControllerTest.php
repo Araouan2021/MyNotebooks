@@ -28,16 +28,10 @@ class LoginControllerTest extends TestCase
 
     public function login()
     {
-        $this->validateLogin($request);
-
-    if ($this->attemptLogin($request)) {
-        $user = $this->guard()->user();
-        $user->generateToken();
-    }
         $response = $this->post('/api/login');
         $response->assertJson([
-            'data' => $user->toArray(),
-        ]); 
+            'data'=>'user',
+            ]); 
     } 
 }
 ?>
