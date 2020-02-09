@@ -2,16 +2,19 @@
 
 namespace Tests\Feature\Http\Controllers\Auth;
 
+
+use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request; 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class LoginControllerTest extends TestCase
 {   
-    use RefreshDatabase;
-
     use AuthenticatesUsers;
+
+    use RefreshDatabase;
 
     /**
      * Where to redirect users after login.
@@ -22,24 +25,20 @@ class LoginControllerTest extends TestCase
 
 
     /** @test */
-    public function login(Request $request)
+
+    public function login()
     {
-    $this->validateLogin($request);
+        $this->validateLogin($request);
+
     if ($this->attemptLogin($request)) {
         $user = $this->guard()->user();
         $user->generateToken();
-
-        return response()->json([
+    }
+        $response = $this->post('/api/login');
+        $response->assertJson([
             'data' => $user->toArray(),
-        ]);
-    }
-
-    return $this->sendFailedLoginResponse($request);
-    $response = $this->post('/api/login');
-    $response->assertJson([
-        'data' => $user->toArray(),
-        ]);
-    }
+        ]); 
+    } 
 }
-    ?>
+?>
     

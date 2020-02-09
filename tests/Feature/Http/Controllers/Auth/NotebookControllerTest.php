@@ -34,6 +34,42 @@ class NotebookControllerTest extends TestCase
     {
        $response = $this->get('/');
        $response->assertViewIs('welcome');
-       $response->assertSeeText("Codetrain");
+       $response->assertSeeText("Laravel");
     }
+
+    public function update()
+    {
+        $response = $this->post('/api/notebooks',[
+            'heading'=>'Errands',
+            'description'=>'shopping',
+            'date'=>'groceries'
+            ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'heading'=>'Errands',
+            'description'=>'shopping',
+            'date'=>'groceries'
+            ]);
+    }
+
+    public function delete()
+    {
+        $response = $this->delete('/api/notebooks');
+        $response->assertStatus(204);
+    }
+
+    public function index()
+    {
+        $response = $this->get('/api/notebooks');
+        $response->assertViewIs();
+    }
+
+    public function show()
+    {
+        $response = $this->get('/api/notebooks');
+        $response->assertViewIs();
+    }
+
+
 }

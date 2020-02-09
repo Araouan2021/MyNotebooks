@@ -29,6 +29,9 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/home';
 
+
+}
+
     public function login(Request $request)
     {
     $this->validateLogin($request);
@@ -46,31 +49,4 @@ class LoginController extends Controller
 
     }
 
-    public function logout(Request $request)
-    {
-        $user = Auth::guard('api')->user();
-
-        if ($user) {
-        $user->api_token = null;
-        $user->save();
-        }
-
-    return response()->json(['data' => 'User logged out.'], 200);
-    }
-
-    protected function sendFailedLoginResponse(Request $request)
-    {
-        $errors = [ 'error' => trans('auth.failed') ];
-        return response()->json($errors, 422);
-    }
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
-    }
-}
+    
