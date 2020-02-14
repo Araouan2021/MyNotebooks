@@ -53,7 +53,7 @@ class NotebookControllerTest extends TestCase
             ]);
     }
 
-    public function delete()
+    public function delete_notebook()
     {
         $response = $this->delete('/api/notebooks');
         $response->assertStatus(204);

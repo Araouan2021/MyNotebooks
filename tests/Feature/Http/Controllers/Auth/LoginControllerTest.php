@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers\Auth;
 
-
+use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request; 
@@ -28,11 +28,8 @@ class LoginControllerTest extends TestCase
 
     public function login()
     {
-        $response = $this->post('/api/login');
-        $response->assertJson([
-            'data'=>'user',
-            ]); 
-    } 
-}
-?>
+        $response = $this->post('/api/login')[$user=$this->guard()->user()]
+
+<?php
+    
     
